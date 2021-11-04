@@ -45,6 +45,21 @@ Route::prefix('user')->group(function () {
 Route::prefix('file')->group(function () {
     Route::post('photo', 'File\FileController@upload'); //上传图片
 });
+/**
+ * 后台管理
+ * csl
+ */
+Route::prefix('houtai')->group(function () {
+    Route::post('tclook', 'Csl\HoutaiController@Tcshow');//吐槽内容的展示
+    Route::post('bblook', 'Csl\HoutaiController@Bbshow');//表白内容的展示
+    Route::post('xzlook', 'Csl\HoutaiController@Xzshow');//闲置内容的展示
+    Route::post('tcpass', 'Csl\HoutaiController@Tcpass');//吐槽内容的展示的通过
+    Route::post('bbpass', 'Csl\HoutaiController@Bbpass');//表白内容的展示的通过
+    Route::post('xzpass', 'Csl\HoutaiController@Xzpass');//闲置内容的展示的通过
+    Route::post('tcreject', 'Csl\HoutaiController@Tcreject');//吐槽内容的展示的驳回
+    Route::post('bbreject', 'Csl\HoutaiController@Bbreject');//表白内容的展示的驳回
+    Route::post('xzreject', 'Csl\HoutaiController@Xzreject');//闲置内容的展示的驳回
+});
 
 /**
  * 乐跑
