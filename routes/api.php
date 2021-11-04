@@ -38,15 +38,12 @@ Route::prefix('user')->group(function () {
     Route::post('change3', 'Login\LoginController@change3'); //student修改密码   (account,password)
 });//--pxy
 
-
-
-
 /**
- * 学生负责人模块
+ * 上传文件 和图片
  * oys
  */
-Route::prefix('student')->group(function () {
-    Route::get('select', 'Student\StudentController@SelectStudent'); //学生负责人个人信息查看  1
+Route::prefix('file')->group(function () {
+    Route::post('photo', 'File\FileController@upload'); //学生负责人个人信息查看  1
 });
 
 
