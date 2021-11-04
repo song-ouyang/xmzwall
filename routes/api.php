@@ -22,9 +22,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
  * 登录注册模块
  */
 Route::prefix('user')->group(function () {
-    Route::post('login', 'Login\LoginController@login'); //super登陆                    (account,password)
-    Route::post('adminlogin', 'Login\LoginController@adminlogin'); //admin登录          (account,password)
-    Route::post('studentlogin', 'Login\LoginController@studentlogin'); //student登录    (account,password)
+    Route::post('login', 'Login\LoginController@login'); //学生登陆                    (account,password)
+    Route::post('adminlogin', 'Login\LoginController@adminlogin'); //管理员登录          (account,password)
+    Route::post('logins', 'Login\LoginController@studentlogin'); //管理员登录    (account,password)
 
     Route::post('logout', 'Login\LoginController@logout'); //管理员退出登陆
     Route::post('registered', 'Login\LoginController@registered'); //super注册        (account,password,name,phone,email)
@@ -43,9 +43,28 @@ Route::prefix('user')->group(function () {
  * oys
  */
 Route::prefix('file')->group(function () {
-    Route::post('photo', 'File\FileController@upload'); //学生负责人个人信息查看  1
+    Route::post('photo', 'File\FileController@upload'); //上传图片
 });
 
+/**
+ * 乐跑
+ * oys
+ */
+Route::prefix('run')->group(function () {
+    Route::post('happyruncreate', 'OYS\HappyrunController@HappyrunCreate'); //存乐跑信息
+    Route::post('happyrunaccept', 'OYS\HappyrunController@HappyrunAccept'); //接乐跑
+    Route::get('happyrunselect', 'OYS\HappyrunController@HappyrunSelect'); //查看乐跑信息
+});
+
+
+/**
+ * 雨伞
+ * oys
+ */
+Route::prefix('umbrella')->group(function () {
+    Route::post('umbrellacreate', 'OYS\UmbrellaController@UmbrellaCreate'); //存乐跑信息
+    Route::post('umbrellaluck', 'OYS\UmbrellaController@UmbrellaLuck'); //存乐跑信息
+});
 
 
 

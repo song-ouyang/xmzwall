@@ -32,7 +32,5 @@ class MailController extends Controller
         return $yzm ?
             json_success('获取邮箱成功!', $yzm, 200) :
             json_fail('获取邮箱失败!', null, 100);
-
-
     }
 }
