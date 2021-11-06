@@ -43,9 +43,59 @@ Route::prefix('user')->group(function () {
  * oys
  */
 Route::prefix('file')->group(function () {
-    Route::post('photo', 'File\FileController@upload'); //学生负责人个人信息查看  1
+    Route::post('photo', 'File\FileController@upload');
 });
 
 
 
 
+Route::prefix('picture')->group(function () {
+    Route::post('add', 'YJX\PictureController@add');//图片添加11
+    Route::post('show', 'YJX\PictureController@show');//图片展示11
+});//yjx
+
+Route::prefix('box')->group(function () {
+    Route::post('add', 'YJX\BoxController@add');//曼和添加11
+    Route::get('show', 'YJX\BoxController@show');//盲盒展示11
+});//yjx
+
+Route::prefix('tucao')->group(function () {
+    Route::post('add', 'YJX\TucaoController@add');//添加吐槽11
+    Route::get('showall', 'YJX\TucaoController@showall');//所有吐槽11
+    Route::post('change', 'YJX\TucaoController@changegongkai');//改变状态（公开）11
+    Route::post('getmeme', 'YJX\TucaoController@getmeme');//得到表情11
+    Route::get('showallmeme', 'YJX\TucaoController@showallmeme');//展示所有表情11
+    Route::post('gettopic', 'YJX\TucaoController@gettopic');//得到话题11
+    Route::get('showalltopic', 'YJX\TucaoController@showalltopic');//展示所有话题11
+
+   // Route::post('getidd', 'YJX\TucaoController@getidd');//得到点赞目标或公开目标id11
+    Route::post('addzan', 'YJX\TucaoController@addzan');//点赞11
+    Route::post('collect', 'YJX\TucaoController@collect');//添加收藏11
+    Route::post('share', 'YJX\TucaoController@share');//添加分享11
+    Route::post('comment', 'YJX\TucaoController@comment');//添加评论11
+    Route::post('getid', 'YJX\TucaoController@getid');//得到评论id11
+});//yjx
+
+
+Route::prefix('idle')->group(function () {
+    Route::post('add', 'YJX\IdleController@add');//闲置添加11
+    Route::get('showall', 'YJX\IdleController@showall');//所有闲置展示11
+
+    Route::post('addzan', 'YJX\IdleController@addzan');//点赞11
+    Route::post('collect', 'YJX\IdleController@collect');//添加收藏11
+    Route::post('share', 'YJX\IdleController@share');//添加分享11
+});//yjx
+
+Route::prefix('love')->group(function () {
+    Route::post('add', 'YJX\LoveController@add');//添加表白11
+    Route::get('showall', 'YJX\LoveController@showall');//展示所有表白11
+    Route::post('change', 'YJX\LoveController@changegongkai');//改变状态（公开）11
+    Route::post('getmeme', 'YJX\LoveController@getmeme');//得到表情11
+    Route::get('showallmeme', 'YJX\LoveController@showallmeme');//展示所有表情11
+
+    // Route::post('getidd', 'YJX\LoveController@getidd');//得到点赞目标或公开目标id11
+    Route::post('addzan', 'YJX\LoveController@addzan');//点赞11
+    Route::post('share', 'YJX\LoveController@share');//添加分享11
+    Route::post('comment', 'YJX\LoveController@comment');//添加评论11
+    Route::post('getid', 'YJX\LoveController@getid');//得到评论id11
+});//yjx
