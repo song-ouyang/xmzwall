@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\OYS;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Requests\OYS\HappyrunAcceptRequest;
-use App\Http\Requests\Requests\OYS\HappyrunCreateRequest;
+
 use App\Models\Happyrun;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,7 +13,7 @@ class HappyrunController extends Controller
 
     //发布
     ///aaa
-    public function HappyrunCreate(HappyrunCreateRequest $request){
+    public function HappyrunCreate(Request $request){
         $form_id = $request['form_id'];
         $text = $request['text'];
         $statue = 1;
@@ -25,7 +24,7 @@ class HappyrunController extends Controller
     }
 
     //接受
-    public function HappyrunAccept(HappyrunAcceptRequest $request){
+    public function HappyrunAccept(Request $request){
         $id = $request['id'];
         $res = Happyrun::HappyrunAccept($id);
         $res2=User::oys_selectUser($res);

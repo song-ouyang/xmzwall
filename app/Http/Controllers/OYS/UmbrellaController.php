@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\OYS;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Requests\OYS\UmbrellaCreateRequest;
-use App\Http\Requests\Requests\OYS\UmbrellaLuckRequest;
 use App\Models\Umbrella;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -12,7 +10,7 @@ use Illuminate\Http\Request;
 class UmbrellaController extends Controller
 {
     //发布 伞
-    public function UmbrellaCreate(UmbrellaCreateRequest $request){
+    public function UmbrellaCreate(Request $request){
         $form_id = $request['form_id'];
         $text = $request['text'];
         $location = $request['location'];
@@ -24,7 +22,7 @@ class UmbrellaController extends Controller
     }
 
     //拼伞  返回一个人 如果为空就 代表没有这个人
-    public function UmbrellaLuck(UmbrellaLuckRequest $request){
+    public function UmbrellaLuck(Request $request){
         $location = $request['location'];
         $res = Umbrella::UmbrellaLuck($location);
         $res2=User::oys_selectUser($res);

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\YJX;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\BoxRequest;
+use App\Http\Requests\Box\BoxRequest;
 use App\Models\Box;
 use App\Models\Picture;
 use App\Models\Updateservice;
