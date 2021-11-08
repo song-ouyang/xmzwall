@@ -14,7 +14,7 @@ class User extends \Illuminate\Foundation\Auth\User implements JWTSubject,Authen
     //
     use Notifiable;
 
-    public $table = 'superadmin';
+    public $table = 'user';
     protected $remeberTokenName = NULL;
     protected $guarded = [];
     protected $fillable = [ 'password', 'name', 'phone','email','account'];
@@ -147,5 +147,22 @@ class User extends \Illuminate\Foundation\Auth\User implements JWTSubject,Authen
             return false;
         }
     }
+
+
+    /**
+     * oys
+     * @param $request
+     */
+    public static function oys_selectUser($form_id)
+    {
+        try {
+            $res=self::where('form_id',$form_id)->get();
+            return $res;
+        } catch (\Exception $e) {
+            logError('查看个人信息失败！', [$e->getMessage()]);
+            return false;
+        }
+    }
+
 
 }

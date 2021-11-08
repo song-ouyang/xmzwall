@@ -11,7 +11,7 @@ class Student extends \Illuminate\Foundation\Auth\User implements JWTSubject,Aut
 {
     use Notifiable;
 
-    public $table = 'student';
+    public $table = 'admin';
     protected $remeberTokenName = NULL;
     protected $guarded = [];
     protected $fillable = [ 'password', 'name', 'phone','email','account'];
