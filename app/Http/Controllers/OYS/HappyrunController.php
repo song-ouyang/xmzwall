@@ -13,6 +13,7 @@ class HappyrunController extends Controller
 {
 
     //发布
+    ///aaa
     public function HappyrunCreate(HappyrunCreateRequest $request){
         $form_id = $request['form_id'];
         $text = $request['text'];
