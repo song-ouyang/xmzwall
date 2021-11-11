@@ -15,12 +15,15 @@ class User extends \Illuminate\Foundation\Auth\User implements JWTSubject,Authen
     use Notifiable;
 
     public $table = 'user';
+
     protected $remeberTokenName = NULL;
+    protected $primaryKey='id';
     protected $guarded = [];
-    protected $fillable = [ 'password', 'name', 'phone','email','account'];
+    protected $fillable = ['name', 'phone','email','account','school','password'];
     protected $hidden = [
         'password',
     ];
+
 
     public function getJWTCustomClaims()
     {
@@ -42,6 +45,7 @@ class User extends \Illuminate\Foundation\Auth\User implements JWTSubject,Authen
     public static function createUser($array = [])
     {
         try {
+            //dd($array);
             $student_id = self::create($array)->id;
             //echo "student_id:" . $student_id;
             return $student_id ?
@@ -119,7 +123,6 @@ class User extends \Illuminate\Foundation\Auth\User implements JWTSubject,Authen
 
         return 'id';
     }
-
     /**
      * @return mixed
      */
@@ -153,10 +156,10 @@ class User extends \Illuminate\Foundation\Auth\User implements JWTSubject,Authen
      * oys
      * @param $request
      */
-    public static function oys_selectUser($form_id)
+    public static function oys_selectUser($id)
     {
         try {
-            $res=self::where('form_id',$form_id)->get();
+            $res=self::where('id',$id)->get();
             return $res;
         } catch (\Exception $e) {
             logError('查看个人信息失败！', [$e->getMessage()]);

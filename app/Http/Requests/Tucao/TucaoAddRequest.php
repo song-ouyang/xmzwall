@@ -26,7 +26,6 @@ class TucaoAddRequest extends FormRequest
     public function rules()
     {
         return [
-            'form_id'=>'required',
             'picture1'=>'required',
             'picture2'=>'required',
             'text'=>'required',

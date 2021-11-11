@@ -32,7 +32,8 @@ class TucaoController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function add(TucaoAddRequest $request){
-        $form_id = $request['form_id'];
+        //$id = $request['id'];//这里应该是token拿操作者的id
+        $id = auth('api')->user()->id;
 
         $remoteDir = config("filesystems.disks.oss.ad_upload_dir");
         $picture1=$request['picture1'];
@@ -46,7 +47,7 @@ class TucaoController extends Controller
         $text = $request['text'];
         $statue = $request['statue'];
         $gongkai =$request['gongkai'];
-        $res = Tucao::add( $form_id,$picture_id,$text,$statue,$gongkai);
+        $res = Tucao::add( $id,$picture_id,$text,$statue,$gongkai);
         return $res?
             json_success('操作成功!', $res, 200) :
             json_fail('操作失败!', $res, 100);
@@ -151,15 +152,17 @@ class TucaoController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function collect(collectRequest$request){
-        $form_id = $request['form_id'];
+        $form_id1 = auth('api')->user()->id;
+        $id = $request['id'];
         $text = $request['text'];
         $praise_number = $request['praise_number'];
         $collect_number = $request['collect_number'];
         $share_number = $request['share_number'];
         $comment_number = $request['comment_number'];
 
+        Tucao::addcollectnum($id);
         $res = Collect::collect(
-            $form_id,
+            $form_id1,
             $text,
             $praise_number,
             $collect_number,
@@ -177,11 +180,25 @@ class TucaoController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function share(shareRequest $request){
-        $form_id = $request['form_id'];
-        $text = $request['text'];
-        $picture_id =$request['picture_id'];
+        $form_id1 = auth('api')->user()->id;
 
-        $res = Share::share($form_id,$text,$picture_id);
+        $id = $request['id'];
+        $text = $request['text'];
+
+        $remoteDir = config("filesystems.disks.oss.ad_upload_dir");
+        $picture1=$request['picture1'];
+        $picture2=$request['picture2'];
+        $tu1=Updateservice::doUpload($picture1,$remoteDir);
+        $tu2=Updateservice::doUpload($picture2,$remoteDir);
+        $picture_id = Picture::establish($tu1,$tu2);
+
+        $statue = $request['statue'];
+        $gongkai =$request['gongkai'];
+
+        $res1 =Tucao::addsharenum($id);
+        $res = Tucao::add($form_id1,$picture_id,$text,$statue,$gongkai);
+
+        //Share::share($form_id,$text,$picture_id);
 
         return $res?
             json_success('操作成功!', $res, 200) :
@@ -194,18 +211,23 @@ class TucaoController extends Controller
      * @param commentRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function comment(commentRequest $request){
-        $form_id = $request['form_id'];
+    public function comment(Request $request){
+        $form_id1 = auth('api')->user()->id;
+
+        $id = $request['id'];
+
         $title = $request['title'];
         $reply_id = $request['reply_id'];
-        $res = Comment::comment($form_id,$title,$reply_id);
+       // dd($form_id);
+        Tucao::addcommentnum($id);
+        $res = Comment::comment($form_id1,$title,$reply_id);
          return $res?
              json_success('操作成功!', $res, 200) :
              json_fail('操作失败!', $res, 100);
     }
     /***
      * yjx
-     * 得到操作数据的id
+     * 得到操作数据的id(评论)
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
@@ -230,6 +252,32 @@ class TucaoController extends Controller
             json_success('操作成功!', $res, 200) :
             json_fail('操作失败!', $res, 100);
     }
+
+    /**
+     * yjx
+     * 得到一条吐槽
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function show(Request $request){
+        $form_id = $request['form_id'];
+        $text = $request['text'];
+        $picture_id = $request['picture_id'];
+        $res = Tucao::show($form_id,$text,$picture_id);
+        return $res?
+            json_success('操作成功!', $res, 200) :
+            json_fail('操作失败!', $res, 100);
+    }
+
+    /*public function gettocaoid(Request $request){
+        $form_id =$request['form_id'];
+        $text = ['text'];
+        $picture_id =$request['picture_id'];
+        $res = Tucao::showtucaoid($form_id,$text,$picture_id);
+        return $res?
+            json_success('操作成功!', $res, 200) :
+            json_fail('操作失败!', $res, 100);
+    }*/
 
 
 }

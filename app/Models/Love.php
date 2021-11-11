@@ -11,10 +11,10 @@ class Love extends Model
     protected $primaryKey = "id";
     protected $guarded = [];
 
-    public static function add ($form_id,$picture_id,$text,$statue,$gongkai){
+    public static function add ($id,$picture_id,$text,$statue,$gongkai){
         try {
             $res= self::create([
-                'form_id'=>$form_id,
+                'form_id'=>$id,
                 'picture_id'=>$picture_id,
                 'text'=>$text,
                 'statue'=>$statue,
@@ -89,8 +89,81 @@ class Love extends Model
             logError('得到所有失败', [$e->getMessage()]);
             return false;
         }
+    }
 
+    /**
+     * yjx
+     * 添加评论数量
+     * @param $id
+     * @return false
+     */
+    public static function addcommentnum($id){
+        try {
+            $comment_number = self::where('id',$id)
+                ->value('comment_number');
+            $res1 = $comment_number+1;
+            $res= self::
+            where('id',$id)
+                ->update([
+                    'comment_number'=>$res1,
+                ]);
+            return $res?
+                $res:
+                false;
+        }catch (\Exception $e) {
+            logError('增加评论数失败', [$e->getMessage()]);
+            return false;
+        }
 
+    }
+
+    /**
+     * yjx
+     * 添加分享数量
+     * @param $id
+     * @return false
+     */
+    public static function addsharenum($id){
+        try {
+            $share_number = self::
+            where('id',$id)->
+            value('share_number');
+            $res1 = $share_number+1;
+            $res= self::where('id',$id)
+                ->update([
+                    'share_number'=>$res1,
+                ]);
+            return $res?
+                $res:
+                false;
+        }catch (\Exception $e) {
+            logError('得到失败', [$e->getMessage()]);
+            return false;
+        }
+
+    }
+
+    /***
+     * yjx
+     * 得到一条吐槽
+     * @param $form_id
+     * @param $text
+     * @param $picture_id
+     * @return false
+     */
+    public static function show($form_id,$text,$picture_id){
+        try {
+            $res= self::where('picture_id',$picture_id)
+                ->where('form_id',$form_id)
+                ->where('text',$text)
+                ->get();
+            return $res?
+                $res:
+                false;
+        }catch (\Exception $e) {
+            logError('得到失败', [$e->getMessage()]);
+            return false;
+        }
     }
 
 }

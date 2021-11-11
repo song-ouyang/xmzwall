@@ -139,7 +139,6 @@ class Student extends \Illuminate\Foundation\Auth\User implements JWTSubject,Aut
         try {
             $res=self::where('account',$account)->update([
                 'password'=>$password
-
             ]);
             return $res;
         } catch (\Exception $e) {
