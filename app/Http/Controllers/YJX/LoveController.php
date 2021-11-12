@@ -3,6 +3,13 @@
 namespace App\Http\Controllers\YJX;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Love\LoveAddRequest;
+use App\Http\Requests\Love\LoveShowRequest;
+use App\Http\Requests\Tucao\commentRequest;
+use App\Http\Requests\Tucao\memeRequest;
+use App\Http\Requests\Tucao\shareRequest;
+use App\Http\Requests\Tucao\TucaoChangeRequest;
+use App\Http\Requests\Tucao\zanRequest;
 use App\Models\Comment;
 use App\Models\Love;
 use App\Models\Meme;
@@ -20,7 +27,7 @@ class LoveController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function add(Request $request){
+    public function add(LoveAddRequest $request){
         //$id = $request['id'];//这里应该是token拿操作者的id
         $id = auth('api')->user()->id;
 
@@ -49,7 +56,7 @@ class LoveController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function changegongkai(Request $request){
+    public function changegongkai(TucaoChangeRequest $request){
         $form_id = $request['form_id'];
         $text =$request['text'];
         $id = Love::getidd($form_id,$text);
@@ -65,7 +72,7 @@ class LoveController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getmeme(Request $request){
+    public function getmeme(memeRequest $request){
         $id = $request['id'];
         $res = Meme::getmeme($id);
         return $res?
@@ -93,7 +100,7 @@ class LoveController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function addzan(Request $request){
+    public function addzan(zanRequest $request){
         $form_id = $request['form_id'];
         $text =$request['text'];
         $id = Love::getidd($form_id,$text);
@@ -110,7 +117,7 @@ class LoveController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function share(Request $request){
+    public function share(shareRequest $request){
         $form_id1 = auth('api')->user()->id;
 
         $id = $request['id'];
@@ -140,7 +147,7 @@ class LoveController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function comment(Request $request){
+    public function comment(commentRequest $request){
         $form_id1 = auth('api')->user()->id;
 
         $id = $request['id'];
@@ -190,7 +197,7 @@ class LoveController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Request $request){
+    public function show(LoveShowRequest $request){
         $form_id = $request['form_id'];
         $text = $request['text'];
         $picture_id = $request['picture_id'];

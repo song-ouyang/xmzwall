@@ -12,11 +12,11 @@ class Share extends Model
     protected $primaryKey = "id";
     protected $guarded = [];
 
-    public static function share($form_id,$text,$picture_id)
+    public static function share($id,$text,$picture_id)
     {
         try {
             $res = self::create([
-                'form_id' => $form_id,
+                'form_id' => $id,
                 'text' => $text,
                 'picture_id'=>$picture_id
             ]);
@@ -29,6 +29,19 @@ class Share extends Model
         }
     }
 
+
+    public static function showall(){
+        try {
+            $res =self::select()->get();
+            return $res ?
+                $res :
+                false;
+        } catch (\Exception $e) {
+            logError('分享失败', [$e->getMessage()]);
+            return false;
+        }
+
+    }
 
 }
 

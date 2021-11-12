@@ -3,6 +3,11 @@
 namespace App\Http\Controllers\YJX;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Idle\addRequest;
+use App\Http\Requests\Idle\IdleCollectRequest;
+use App\Http\Requests\Idle\IdleShowRequest;
+use App\Http\Requests\Tucao\shareRequest;
+use App\Http\Requests\Tucao\zanRequest;
 use App\Models\Collect;
 use App\Models\Idle;
 use App\Models\Picture;
@@ -16,10 +21,10 @@ class IdleController extends Controller
     /***
      * yjx
      * 添加闲置
-     * @param Request $request
+     * @param addRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function add(Request $request){
+    public function add(addRequest $request){
         //$id = $request['id'];//这里应该是token拿操作者的id
         $id = auth('api')->user()->id;
 
@@ -45,10 +50,10 @@ class IdleController extends Controller
     /***
      * yjx
      * 点赞
-     * @param Request $request
+     * @param zanRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function addzan(Request $request){
+    public function addzan(zanRequest $request){
         $form_id = $request['form_id'];
         $text =$request['text'];
         $id = Idle::getidd($form_id,$text);
@@ -65,7 +70,7 @@ class IdleController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function collect(Request $request){
+    public function collect(IdleCollectRequest $request){
         $form_id1 = auth('api')->user()->id;
         $id = $request['id'];
 
@@ -96,7 +101,7 @@ class IdleController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function share(Request $request){
+    public function share(shareRequest $request){
         $form_id1 = auth('api')->user()->id;
 
         $id = $request['id'];
@@ -126,7 +131,7 @@ class IdleController extends Controller
             json_fail('操作失败!', $res, 100);
     }
 
-    public function show(Request $request){
+    public function show(IdleShowRequest $request){
         $form_id = $request['form_id'];
         $text = $request['text'];
         $picture_id = $request['picture_id'];

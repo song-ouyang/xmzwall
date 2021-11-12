@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Tucao;
+namespace App\Http\Requests\Idle;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class commentRequest extends FormRequest
+class addRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,11 +26,14 @@ class commentRequest extends FormRequest
     public function rules()
     {
         return [
-            'id'=>'required',
-            'title' => 'required',
-            'reply_id' => 'required',
+            'picture1'=>'required',
+            'picture2'=>'required',
+            'text'=>'required',
+            'statue'=>'required',
+            'gongkai'=>'required',
         ];
     }
+
     protected function failedValidation(Validator $validator){
 
         throw(new HttpResponseException(json_fail('参数错误',$validator->errors()->all(),422)));
