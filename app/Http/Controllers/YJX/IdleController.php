@@ -7,14 +7,21 @@ use App\Models\Collect;
 use App\Models\Idle;
 use App\Models\Picture;
 use App\Models\Share;
+use App\Models\Tucao;
 use App\Models\Updateservice;
 use Illuminate\Http\Request;
 
 class IdleController extends Controller
 {
-
+    /***
+     * yjx
+     * 添加闲置
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function add(Request $request){
-        $form_id = $request['form_id'];
+        //$id = $request['id'];//这里应该是token拿操作者的id
+        $id = auth('api')->user()->id;
 
         $remoteDir = config("filesystems.disks.oss.ad_upload_dir");
         $picture1=$request['picture1'];
@@ -28,14 +35,19 @@ class IdleController extends Controller
         $text = $request['text'];
         $statue = $request['statue'];
         $price =$request['price'];
-        $res = Idle::add( $form_id,$picture_id,$text,$statue,$price);
+        $res = Idle::add( $id,$picture_id,$text,$statue,$price);
         return $res?
             json_success('操作成功!', $res, 200) :
             json_fail('操作失败!', $res, 100);
 
     }
 
-
+    /***
+     * yjx
+     * 点赞
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function addzan(Request $request){
         $form_id = $request['form_id'];
         $text =$request['text'];
@@ -46,8 +58,17 @@ class IdleController extends Controller
             json_fail('操作失败!', $res, 100);
 
     }
+
+    /***
+     * yjx
+     * 收藏闲置
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function collect(Request $request){
-        $form_id = $request['form_id'];
+        $form_id1 = auth('api')->user()->id;
+        $id = $request['id'];
+
         $text = $request['text'];
         $praise_number = $request['praise_number'];
         $collect_number = $request['collect_number'];
@@ -55,8 +76,9 @@ class IdleController extends Controller
         $comment_number = $request['comment_number'];
         $price = $request['price'];
 
+        Tucao::addcollectnum($id);
         $res = Collect::collect1(
-            $form_id,
+            $form_id1,
             $text,
             $praise_number,
             $collect_number,
@@ -68,12 +90,30 @@ class IdleController extends Controller
             json_fail('操作失败!', $res, 100);
     }
 
+    /***
+     * yjx
+     * 闲置分享
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function share(Request $request){
-        $form_id = $request['form_id'];
-        $text = $request['text'];
-        $picture_id =$request['picture_id'];
+        $form_id1 = auth('api')->user()->id;
 
-        $res = Share::share($form_id,$text,$picture_id);
+        $id = $request['id'];
+        $text = $request['text'];
+
+        $remoteDir = config("filesystems.disks.oss.ad_upload_dir");
+        $picture1=$request['picture1'];
+        $picture2=$request['picture2'];
+        $tu1=Updateservice::doUpload($picture1,$remoteDir);
+        $tu2=Updateservice::doUpload($picture2,$remoteDir);
+        $picture_id = Picture::establish($tu1,$tu2);
+
+        $statue = $request['statue'];
+        $price =$request['price'];
+
+        $res1 =Idle::addsharenum($id);
+        $res = Idle::add($form_id1,$picture_id,$text,$statue,$price);
         return $res?
             json_success('操作成功!', $res, 200) :
             json_fail('操作失败!', $res, 100);
@@ -86,5 +126,14 @@ class IdleController extends Controller
             json_fail('操作失败!', $res, 100);
     }
 
+    public function show(Request $request){
+        $form_id = $request['form_id'];
+        $text = $request['text'];
+        $picture_id = $request['picture_id'];
+        $res = Idle::show($form_id,$text,$picture_id);
+        return $res?
+            json_success('操作成功!', $res, 200) :
+            json_fail('操作失败!', $res, 100);
+    }
 
 }

@@ -26,7 +26,7 @@ class collectRequest extends FormRequest
     public function rules()
     {
         return [
-            'form_id'=>'required',
+            'id'=>'required',
             'text'=>'required',
             'praise_number'=>'required',
             'collect_number'=>'required',

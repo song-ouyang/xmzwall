@@ -216,7 +216,7 @@ class LoginController extends Controller
         $registeredInfo['email'] = $registeredInfo['email'];
         $registeredInfo['account'] = $registeredInfo['account'];
 
-        $registeredInfo['type'] = $registeredInfo['type'];
+        //$registeredInfo['type'] = $registeredInfo['type'];
 
         return $registeredInfo;
     }

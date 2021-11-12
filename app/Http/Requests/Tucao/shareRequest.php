@@ -26,9 +26,13 @@ class shareRequest extends FormRequest
     public function rules()
     {
         return [
-            'form_id'=>'required',
+            'id' => 'required',
             'text' => 'required',
-            'picture_id' => 'required',
+            'picture1' => 'required',
+            'picture2' => 'required',
+            'statue' => 'required',
+            'gongkai' => 'required'
+
         ];
     }
     protected function failedValidation(Validator $validator){

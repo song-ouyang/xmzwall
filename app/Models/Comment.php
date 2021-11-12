@@ -11,10 +11,10 @@ class Comment extends Model
     protected $primaryKey = "id";
     protected $guarded = [];
 
-    public static function comment($form_id,$title,$reply_id){
+    public static function comment($form_id1,$title,$reply_id){
         try {
             $res = self::create([
-                'form_id' => $form_id,
+                'form_id' => $form_id1,
                 'title' => $title,
                 'reply_id'=>$reply_id
             ]);
@@ -32,7 +32,8 @@ class Comment extends Model
             $res = self::select()
                     ->where('form_id',$form_id)
                 ->where('title',$title)
-                ->value('id');
+                ->value('id')
+            ->first();
             return $res ?
                 $res :
                 false;
@@ -40,9 +41,9 @@ class Comment extends Model
             logError('查找id失败', [$e->getMessage()]);
             return false;
         }
-
-
     }
+
+
 
 
 }
