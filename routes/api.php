@@ -102,6 +102,8 @@ Route::prefix('picture')->group(function () {
 Route::prefix('box')->group(function () {
     Route::post('add', 'YJX\BoxController@add');//曼和添加11
     Route::get('show', 'YJX\BoxController@show');//盲盒展示11
+    Route::post('share', 'YJX\BoxController@share');//盲盒分享
+    Route::get('showall', 'YJX\BoxController@showall');//所有分享盲盒
 
 
 
@@ -120,7 +122,7 @@ Route::prefix('tucao')->group(function () {
    // Route::post('getidd', 'YJX\TucaoController@getidd');//得到点赞目标或公开目标id2
     Route::post('addzan', 'YJX\TucaoController@addzan');//点赞22
     Route::post('collect', 'YJX\TucaoController@collect');//添加收藏22
-    Route::post('share', 'YJX\TucaoController@share');//添加分享11
+    Route::post('share', 'YJX\TucaoController@share');//添加分享22
     Route::post('comment', 'YJX\TucaoController@comment');//添加评论22
     Route::post('getid', 'YJX\TucaoController@getid');//得到评论id22
     Route::post('show', 'YJX\TucaoController@show');//得到一条吐槽22

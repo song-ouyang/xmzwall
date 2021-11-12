@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Tucao;
+namespace App\Http\Requests\Box;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class commentRequest extends FormRequest
+class BoxShareRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,9 +26,9 @@ class commentRequest extends FormRequest
     public function rules()
     {
         return [
-            'id'=>'required',
-            'title' => 'required',
-            'reply_id' => 'required',
+            'text'=>'required',
+            'picture_id'=>'required',
+
         ];
     }
     protected function failedValidation(Validator $validator){
