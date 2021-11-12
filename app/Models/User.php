@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 
+//用户
 class User extends \Illuminate\Foundation\Auth\User implements JWTSubject,Authenticatable
 {
     //
@@ -71,7 +72,6 @@ class User extends \Illuminate\Foundation\Auth\User implements JWTSubject,Authen
                     'student_name' => $request['student_name'],
                     'student_email' => $request['student_email'],
                     'student_phone' => $request['student_phone'],
-
                 ]
             );
             return $res ?
@@ -120,9 +120,9 @@ class User extends \Illuminate\Foundation\Auth\User implements JWTSubject,Authen
     public function getAuthIdentifierName()
     {
         // Return the name of unique identifier for the user (e.g. "id")
-
         return 'id';
     }
+
     /**
      * @return mixed
      */
@@ -142,7 +142,6 @@ class User extends \Illuminate\Foundation\Auth\User implements JWTSubject,Authen
         try {
             $res=self::where('account',$account)->update([
                 'password'=>$password
-
             ]);
             return $res;
         } catch (\Exception $e) {
@@ -167,5 +166,22 @@ class User extends \Illuminate\Foundation\Auth\User implements JWTSubject,Authen
         }
     }
 
+
+    /**
+     * oys
+     * @param $request
+     * 用token拿 用户信息
+     */
+    public static function SelectUserbyToken()
+    {
+        try {
+            $id = auth('api')->user()->id;
+            $res=self::where('id',$id)->get();
+            return $res;
+        } catch (\Exception $e) {
+            logError('查看个人信息失败！', [$e->getMessage()]);
+            return false;
+        }
+    }
 
 }

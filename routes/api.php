@@ -22,30 +22,37 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
  * 登录注册模块
  */
 Route::prefix('user')->group(function () {
+
     Route::post('login', 'Login\LoginController@login'); //学生登陆
     Route::post('logins', 'Login\LoginController@studentlogin'); //管理员登录
+
+
     Route::post('logout', 'Login\LoginController@logout'); //管理员退出登陆
 
     Route::post('registered', 'Login\LoginController@registered'); //学生注册
-    Route::post('registeredss', 'Login\LoginController@registeredss'); //管理员
+    Route::post('registeredss', 'Login\LoginController@registeredss'); //管理员注册
 
     Route::any('mail/send','Login\MailController@send');//发送验证码                         (email)
 
     Route::post('change1', 'Login\LoginController@change1'); //super修改密码     (account,password)
     Route::post('change2', 'Login\LoginController@change2'); //admin修改密码     (account,password)
     Route::post('change3', 'Login\LoginController@change3'); //student修改密码   (account,password)
+
+    Route::get('selectuserbytoken', 'Login\LoginController@SelectUserbyToken'); //管理员登录
 });//--pxy
 
 /**
  * 上传文件 和图片
  * oys
  */
+
 Route::prefix('file')->group(function () {
 
     Route::post('photo', 'File\FileController@upload');
 
     Route::post('photo', 'File\FileController@upload'); //上传图片
 });
+
 /**
  * 后台管理
  * csl
@@ -62,6 +69,7 @@ Route::prefix('houtai')->group(function () {
     Route::post('xzreject', 'Csl\HoutaiController@Xzreject');//闲置内容的展示的驳回
 
 });
+
 
 /**
  * 乐跑
@@ -82,6 +90,7 @@ Route::prefix('umbrella')->group(function () {
     Route::post('umbrellacreate', 'OYS\UmbrellaController@UmbrellaCreate'); //存乐跑信息
     Route::post('umbrellaluck', 'OYS\UmbrellaController@UmbrellaLuck'); //存乐跑信息
 });
+
 
 
 

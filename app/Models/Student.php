@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
+
+
+//管理员
+
 class Student extends \Illuminate\Foundation\Auth\User implements JWTSubject,Authenticatable
 {
     use Notifiable;

@@ -266,4 +266,16 @@ class LoginController extends Controller
             json_fail("操作失败", $res, 100);
     }
 
+
+    /**修改admin密码
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function SelectUserbyToken(){
+        $res=User::SelectUserbyToken();
+        return $res ?
+            json_success("操作成功", $res, 200) :
+            json_fail("操作失败", $res, 100);
+    }
+
 }

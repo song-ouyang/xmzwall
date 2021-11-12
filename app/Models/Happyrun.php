@@ -17,13 +17,13 @@ class Happyrun extends Model
      * oys
      * @return $res
      */
-    public static function HappyrunCreate($form_id,$text, $statue)
+    public static function HappyrunCreate($id,$text, $statue)
     {
         try {
             //创建表成功
             $res=self::create(
                 [
-                    'form_id'=>$form_id,
+                    'form_id'=>$id,
                     'text'=>$text,
                     'statue'=>$statue,
                 ]
