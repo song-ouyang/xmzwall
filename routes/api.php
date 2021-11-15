@@ -69,7 +69,18 @@ Route::prefix('houtai')->group(function () {
     Route::post('xzreject', 'Csl\HoutaiController@Xzreject');//闲置内容的展示的驳回
 
 });
-
+/*
+ * 个人中心
+ * csl
+ */
+Route::prefix('ower')->group(function(){
+    Route::post('owen', 'Csl\OwerController@Oshow');//个人信息的展示
+    Route::post('bohui', 'Csl\OwerController@Bshow');//个人中心驳回的展示
+    Route::post('ttongguo', 'Csl\OwerController@Tcshow');//吐槽个人中心通过的展示
+    Route::post('btongguo', 'Csl\OwerController@Bbshow');//表白个人中心通过的展示
+    Route::post('xtongguo', 'Csl\OwerController@Xzshow');//闲置个人中心通过的展示
+    Route::post('qianming', 'Csl\OwerController@Sign');//签名
+});
 
 /**
  * 乐跑
